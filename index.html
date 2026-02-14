@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BizzTalks - Web Development, Video Editing & Digital Marketing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #000000;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-15px) scale(1.02);
+        }
+
+        .service-card {
+            position: relative;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.2), transparent);
+            transition: left 0.6s;
+        }
+
+        .service-card:hover::before {
+            left: 100%;
+        }
+
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s ease-in forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b35;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff8c42 100%);
+            transition: all 0.3s;
+        }
+
+        .btn-gradient:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.5);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glow {
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+
+        /* Particle effect */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(102, 126, 234, 0.3);
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            33% {
+                transform: translate(30px, -30px);
+            }
+
+            66% {
+                transform: translate(-20px, 20px);
+            }
+        }
+
+        /* Typing effect */
+        .typing-text::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* Counter animation */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Scroll reveal */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease-out;
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white">
+
+    <!-- Header -->
+    <header class="fixed w-full top-0 z-50 bg-black bg-opacity-90 backdrop-blur-md shadow-lg border-b border-gray-800">
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-3xl font-bold text-orange-500">BizzTalks</div>
+                <ul class="hidden md:flex space-x-8">
+                    <li><a href="#home"
+                            class="nav-link text-white hover:text-orange-500 transition font-medium">Home</a></li>
+                    <li><a href="#about"
+                            class="nav-link text-white hover:text-orange-500 transition font-medium">About</a></li>
+                    <li><a href="#services"
+                            class="nav-link text-white hover:text-orange-500 transition font-medium">Services</a></li>
+                    <li><a href="#contact"
+                            class="nav-link text-white hover:text-orange-500 transition font-medium">Contact</a></li>
+                </ul>
+                <div class="flex items-center space-x-4">
+                    <a href="#contact"
+                        class="hidden md:block btn-gradient text-white px-6 py-2 rounded-full font-semibold">Get
+                        Started</a>
+                    <button id="menuBtn" class="md:hidden text-white text-2xl">☰</button>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-gray-900 shadow-2xl md:hidden z-50">
+            <div class="p-6">
+                <button id="closeBtn" class="text-white text-2xl mb-8">✕</button>
+                <ul class="space-y-6">
+                    <li><a href="#home"
+                            class="mobile-link text-white text-xl block hover:text-orange-500 transition">Home</a></li>
+                    <li><a href="#about"
+                            class="mobile-link text-white text-xl block hover:text-orange-500 transition">About</a></li>
+                    <li><a href="#services"
+                            class="mobile-link text-white text-xl block hover:text-orange-500 transition">Services</a>
+                    </li>
+                    <li><a href="#contact"
+                            class="mobile-link text-white text-xl block hover:text-orange-500 transition">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative gradient-bg text-white pt-32 pb-20 mt-16 overflow-hidden">
+        <!-- Particles -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="particle" style="width: 4px; height: 4px; top: 20%; left: 10%;"></div>
+            <div class="particle" style="width: 6px; height: 6px; top: 60%; left: 80%; animation-delay: 2s;"></div>
+            <div class="particle" style="width: 3px; height: 3px; top: 40%; left: 40%; animation-delay: 4s;"></div>
+            <div class="particle" style="width: 5px; height: 5px; top: 70%; left: 20%; animation-delay: 1s;"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                        Transform Your Digital Presence with <span class="text-orange-400 typing-text"
+                            id="typingText"></span>
+                    </h1>
+                    <p class="text-xl mb-8 text-gray-100">
+                        Your trusted partner in Web Development, Video Editing & Digital Marketing Excellence
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#services"
+                            class="btn-gradient text-white px-8 py-4 rounded-full font-semibold text-lg inline-block">Explore
+                            Services</a>
+                        <a href="#contact"
+                            class="glass-effect text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-white hover:text-purple-700 transition inline-block">Contact
+                            Us</a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="floating">
+                        <div
+                            class="w-80 h-80 bg-gradient-to-br from-orange-400 to-pink-500 rounded-full flex items-center justify-center text-8xl shadow-2xl glow">
+                            🚀
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-black scroll-reveal">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold text-center mb-16">
+                About <span class="gradient-text">BizzTalks</span>
+            </h2>
+            <div class="flex flex-col md:flex-row items-center gap-12">
+                <div class="md:w-1/2">
+                    <div class="relative">
+                        <div
+                            class="absolute -top-4 -left-4 w-72 h-72 bg-purple-900 bg-opacity-30 rounded-3xl -z-10 blur-xl">
+                        </div>
+                        <div
+                            class="absolute -bottom-4 -right-4 w-72 h-72 bg-orange-900 bg-opacity-30 rounded-3xl -z-10 blur-xl">
+                        </div>
+                        <div
+                            class="w-full h-96 bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 rounded-3xl flex items-center justify-center shadow-2xl border border-gray-800 relative overflow-hidden">
+                            <!-- Animated circles background -->
+                            <div class="absolute inset-0">
+                                <div class="absolute w-32 h-32 bg-purple-500 rounded-full opacity-20 blur-2xl animate-pulse"
+                                    style="top: 20%; left: 20%;"></div>
+                                <div class="absolute w-40 h-40 bg-orange-500 rounded-full opacity-20 blur-2xl animate-pulse"
+                                    style="bottom: 20%; right: 20%; animation-delay: 1s;"></div>
+                            </div>
+                            <!-- Modern icon illustration -->
+                            <div class="relative z-10">
+                                <svg class="w-48 h-48" viewBox="0 0 200 200" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <!-- Laptop -->
+                                    <rect x="40" y="70" width="120" height="80" rx="4" fill="url(#grad1)"
+                                        stroke="#667eea" stroke-width="2" />
+                                    <rect x="35" y="145" width="130" height="8" rx="4" fill="url(#grad2)" />
+                                    <circle cx="100" cy="110" r="15" fill="#ff6b35" opacity="0.3" />
+                                    <path d="M85 105 L95 115 L115 95" stroke="#ff6b35" stroke-width="3"
+                                        stroke-linecap="round" stroke-linejoin="round" />
+
+                                    <!-- Floating elements -->
+                                    <circle cx="170" cy="50" r="8" fill="#ff6b35" opacity="0.6">
+                                        <animate attributeName="cy" values="50;45;50" dur="2s"
+                                            repeatCount="indefinite" />
+                                    </circle>
+                                    <circle cx="30" cy="60" r="6" fill="#667eea" opacity="0.6">
+                                        <animate attributeName="cy" values="60;55;60" dur="2.5s"
+                                            repeatCount="indefinite" />
+                                    </circle>
+                                    <rect x="160" y="140" width="12" height="12" fill="#764ba2" opacity="0.6" rx="2">
+                                        <animate attributeName="y" values="140;135;140" dur="2.2s"
+                                            repeatCount="indefinite" />
+                                    </rect>
+
+                                    <defs>
+                                        <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                            <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+                                        </linearGradient>
+                                        <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                            <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2">
+                    <h3 class="text-3xl font-bold mb-6 text-white">Empowering Businesses in Kolkata and Beyond</h3>
+                    <p class="text-lg text-gray-300 mb-4 leading-relaxed">
+                        BizzTalks is a leading digital services agency based in Kolkata, specializing in cutting-edge
+                        web development, professional video editing, and result-driven digital marketing strategies.
+                    </p>
+                    <p class="text-lg text-gray-300 mb-4 leading-relaxed">
+                        We combine creativity with technology to deliver solutions that not only meet but exceed our
+                        clients' expectations. Our team of experts is dedicated to helping businesses establish a strong
+                        digital presence and achieve measurable growth.
+                    </p>
+                    <p class="text-lg text-gray-300 leading-relaxed">
+                        From startups to established enterprises, we partner with businesses to unlock their full
+                        potential in the digital landscape.
+                    </p>
+                    <div class="mt-8 grid grid-cols-3 gap-4">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold gradient-text counter" data-target="50">0</div>
+                            <div class="text-gray-400 mt-2">Projects Done</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold gradient-text counter" data-target="30">0</div>
+                            <div class="text-gray-400 mt-2">Happy Clients</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold gradient-text counter" data-target="100">0</div>
+                            <div class="text-gray-400 mt-2">Satisfaction</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20 bg-gradient-to-b from-black to-gray-900 scroll-reveal">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold text-center mb-6">
+                Our <span class="gradient-text">Services</span>
+            </h2>
+            <p class="text-center text-gray-400 text-lg mb-16 max-w-2xl mx-auto">
+                We offer comprehensive digital solutions tailored to elevate your brand and drive business success
+            </p>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Web Development -->
+                <div class="service-card card-hover bg-gray-900 rounded-2xl p-8 shadow-2xl hover:shadow-purple-500/20">
+                    <div
+                        class="w-20 h-20 gradient-bg rounded-2xl flex items-center justify-center text-4xl mb-6 mx-auto glow">
+                        💻
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4 text-center">Web Development</h3>
+                    <p class="text-gray-400 text-center leading-relaxed mb-6">
+                        Custom, responsive websites built with modern frameworks for speed and scale.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-400">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Responsive Design
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Modern Frameworks
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            SEO Optimized
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Video Editing -->
+                <div class="service-card card-hover bg-gray-900 rounded-2xl p-8 shadow-2xl hover:shadow-purple-500/20">
+                    <div
+                        class="w-20 h-20 gradient-bg rounded-2xl flex items-center justify-center text-4xl mb-6 mx-auto glow">
+                        🎬
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4 text-center">Video Editing</h3>
+                    <p class="text-gray-400 text-center leading-relaxed mb-6">
+                        Professional editing that captures attention and tells your brand's story effectively.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-400">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Corporate Videos
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Social Media Content
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Motion Graphics
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Digital Marketing -->
+                <div class="service-card card-hover bg-gray-900 rounded-2xl p-8 shadow-2xl hover:shadow-purple-500/20">
+                    <div
+                        class="w-20 h-20 gradient-bg rounded-2xl flex items-center justify-center text-4xl mb-6 mx-auto glow">
+                        📱
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4 text-center">Digital Marketing</h3>
+                    <p class="text-gray-400 text-center leading-relaxed mb-6">
+                        Data-driven strategies to increase visibility, leads, and conversion rates.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-400">
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Social Media Marketing
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            SEO & SEM
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-5 h-5 text-green-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd"
+                                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                    clip-rule="evenodd"></path>
+                            </svg>
+                            Analytics & Reporting
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-20 gradient-bg text-white scroll-reveal">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold text-center mb-16">Why Choose BizzTalks?</h2>
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="text-center glass-effect p-6 rounded-2xl hover:scale-105 transition-transform">
+                    <div
+                        class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-3xl mb-4 mx-auto">
+                        ⚡
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Fast Delivery</h3>
+                    <p class="text-gray-100">Quick turnaround without compromising quality</p>
+                </div>
+                <div class="text-center glass-effect p-6 rounded-2xl hover:scale-105 transition-transform">
+                    <div
+                        class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-3xl mb-4 mx-auto">
+                        🎯
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Result-Focused</h3>
+                    <p class="text-gray-100">Strategies designed to achieve measurable outcomes</p>
+                </div>
+                <div class="text-center glass-effect p-6 rounded-2xl hover:scale-105 transition-transform">
+                    <div
+                        class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-3xl mb-4 mx-auto">
+                        💰
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Affordable Pricing</h3>
+                    <p class="text-gray-100">Premium services at competitive rates</p>
+                </div>
+                <div class="text-center glass-effect p-6 rounded-2xl hover:scale-105 transition-transform">
+                    <div
+                        class="w-16 h-16 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-3xl mb-4 mx-auto">
+                        🤝
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Dedicated Support</h3>
+                    <p class="text-gray-100">Always available to help you succeed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-black scroll-reveal">
+        <div class="container mx-auto px-6">
+            <h2 class="text-5xl font-bold text-center mb-6">
+                Get In <span class="gradient-text">Touch</span>
+            </h2>
+            <p class="text-center text-gray-400 text-lg mb-16 max-w-2xl mx-auto">
+                Ready to transform your digital presence? Let's discuss how we can help your business grow
+            </p>
+
+            <div class="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <!-- Contact Info -->
+                <div class="space-y-8">
+                    <div
+                        class="flex items-start space-x-4 glass-effect p-6 rounded-xl hover:scale-105 transition-transform">
+                        <div
+                            class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+                            📍
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Location</h3>
+                            <p class="text-gray-400">Kolkata, West Bengal, India</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex items-start space-x-4 glass-effect p-6 rounded-xl hover:scale-105 transition-transform">
+                        <div
+                            class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+                            📞
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Phone</h3>
+                            <a href="tel:+919748989711"
+                                class="text-purple-400 hover:text-orange-500 text-lg transition">+91 9748989711</a>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex items-start space-x-4 glass-effect p-6 rounded-xl hover:scale-105 transition-transform">
+                        <div
+                            class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+                            ✉️
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Email</h3>
+                            <a href="mailto:managerialtalk@gmail.com"
+                                class="text-purple-400 hover:text-orange-500 text-lg transition break-all">managerialtalk@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <div
+                        class="flex items-start space-x-4 glass-effect p-6 rounded-xl hover:scale-105 transition-transform">
+                        <div
+                            class="w-14 h-14 gradient-bg rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+                            🕐
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white mb-2">Business Hours</h3>
+                            <p class="text-gray-400">Monday - Saturday: 9:00 AM - 6:00 PM</p>
+                            <p class="text-gray-400">Sunday: Closed</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="glass-effect rounded-2xl p-8 shadow-2xl">
+                    <form id="contactForm" class="space-y-6">
+                        <div>
+                            <label class="block text-gray-300 font-semibold mb-2">Your Name</label>
+                            <input type="text"
+                                class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white focus:border-purple-500 focus:outline-none transition"
+                                placeholder="John Doe" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-300 font-semibold mb-2">Email Address</label>
+                            <input type="email"
+                                class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white focus:border-purple-500 focus:outline-none transition"
+                                placeholder="john@example.com" required>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-300 font-semibold mb-2">Phone Number</label>
+                            <input type="tel"
+                                class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white focus:border-purple-500 focus:outline-none transition"
+                                placeholder="+91 98765 43210">
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-300 font-semibold mb-2">Your Message</label>
+                            <textarea rows="4"
+                                class="w-full px-4 py-3 rounded-lg bg-gray-900 border border-gray-700 text-white focus:border-purple-500 focus:outline-none transition resize-none"
+                                placeholder="Tell us about your project..." required></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full btn-gradient text-white py-4 rounded-lg font-bold text-lg">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-orange-500 mb-4">BizzTalks</h3>
+                    <p class="text-gray-400">Transforming businesses through innovative digital solutions in Kolkata and
+                        beyond.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#home" class="hover:text-orange-500 transition">Home</a></li>
+                        <li><a href="#about" class="hover:text-orange-500 transition">About</a></li>
+                        <li><a href="#services" class="hover:text-orange-500 transition">Services</a></li>
+                        <li><a href="#contact" class="hover:text-orange-500 transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Our Services</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>Web Development</li>
+                        <li>Video Editing</li>
+                        <li>Digital Marketing</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 BizzTalks. All Rights Reserved. | Empowering Digital Excellence</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const closeBtn = document.getElementById('closeBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('active');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Typing Effect
+        const typingText = document.getElementById('typingText');
+        const text = 'BizzTalks';
+        let index = 0;
+
+        function type() {
+            if (index < text.length) {
+                typingText.textContent += text.charAt(index);
+                index++;
+                setTimeout(type, 200);
+            }
+        }
+
+        setTimeout(type, 500);
+
+        // Counter Animation
+        const counters = document.querySelectorAll('.counter');
+        let animated = false;
+
+        function animateCounters() {
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 50;
+                let current = 0;
+
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        counter.textContent = Math.floor(current) + (target === 100 ? '%' : '+');
+                        setTimeout(updateCounter, 30);
+                    } else {
+                        counter.textContent = target + (target === 100 ? '%' : '+');
+                    }
+                };
+
+                updateCounter();
+            });
+        }
+
+        // Scroll Reveal Animation
+        const reveals = document.querySelectorAll('.scroll-reveal');
+
+        function reveal() {
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('active');
+
+                    // Animate counters when about section is visible
+                    if (!animated && element.id === 'about') {
+                        animateCounters();
+                        animated = true;
+                    }
+                }
+            });
+        }
+
+        window.addEventListener('scroll', reveal);
+        reveal(); // Initial check
+
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            contactForm.reset();
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
