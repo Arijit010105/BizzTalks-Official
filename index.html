@@ -801,7 +801,14 @@
             };
 
             try {
-                const response = await fetch('http://localhost:3000/api/contact', {
+                // Dynamic API URL: 
+                // - If on port 5500 (Live Server), hit localhost:3000
+                // - Otherwise (Vercel/Localhost:3000), use relative path
+                const API_URL = window.location.port === '5500'
+                    ? 'http://localhost:3000/api/contact'
+                    : '/api/contact';
+
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
