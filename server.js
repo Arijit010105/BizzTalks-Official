@@ -10,7 +10,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Connect to Database
-connectDB();
+// connectDB(); // Removed for Vercel safety - API route connects on demand
 
 // Middleware
 app.use(cors()); // Enable All CORS Requests
