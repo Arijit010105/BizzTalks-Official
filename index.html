@@ -801,12 +801,18 @@
             };
 
             try {
-                // Dynamic API URL: 
-                // - If on port 5500 (Live Server), hit localhost:3000
-                // - Otherwise (Vercel/Localhost:3000), use relative path
-                const API_URL = window.location.port === '5500'
+                // Robust API URL detection
+                const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+                const isBackendPort = window.location.port === '3000';
+
+                // If we are on localhost/127.0.0.1 but NOT on port 3000 (e.g. Live Server 5500),
+                // we must point to the full URL of the backend.
+                // Otherwise (Vercel or localhost:3000), use relative path.
+                const API_URL = (isLocal && !isBackendPort)
                     ? 'http://localhost:3000/api/contact'
                     : '/api/contact';
+
+                console.log('Sending request to:', API_URL); // Debug log
 
                 const response = await fetch(API_URL, {
                     method: 'POST',
@@ -822,11 +828,12 @@
                     alert('Thank you for your message! We will get back to you soon.');
                     contactForm.reset();
                 } else {
-                    throw new Error(result.error || 'Failed to send message');
+                    throw new Error(result.error || 'Server responded with error');
                 }
             } catch (error) {
-                alert('Sorry, there was an error sending your message. Please try again later.');
-                console.error('Error:', error);
+                // Alert the EXACT error to help debugging
+                alert(`Error Sending Message:\n${error.message}\n\nCheck console for details.`);
+                console.error('Submission Error:', error);
             } finally {
                 submitBtn.textContent = originalBtnText;
                 submitBtn.disabled = false;
